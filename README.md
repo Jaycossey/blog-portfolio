@@ -57,6 +57,12 @@ dotnet new mvc -o <PROJECTNAME>
 
 // Open and begin coding the project within VsCode
 code -r <PROJECTNAME>
+
+// Run project
+dotnet run
+
+// Watch server on local port
+dotnet watch
 ```
 This creates the template files for the model-view-controller.
 
@@ -120,7 +126,7 @@ The `UseStaticFiles()`, `UseRouting()` and `UseAuthorisation()` methods set up t
 Hovering over these methods in VsCode will provide further more in depth descriptions. However it is important to understand what this program does in order to proceed in development.
 
 ### Adding a Controller
-
+ 
 In order to create an endpoint for our application, we need to add a Controller to the project, we have in our template, a HomeController.cs file, this controls the data and views displayed at the default endpoint. 
 
 When looking at the Controllers directory, we will add a file called 'BlogController.cs'. This should be a C# class file. From this point of the walkthrough forward, any new files will have details listed in the comments of the file itself. 
@@ -134,6 +140,13 @@ To help with navigation following the creation of the view, note the comments in
 ### Adding a Model
 
 As previously mentioned, Models are the structure for the data that we have within the applications database. Each model represents a table within the database. In this case, to keep things simple, we will look at creating a 'BlogPost' model. 
+
+Models are sets of classes which represent domain data and logic for the application. (See /Controllers/BlogController.cs) 
+
+#### Setting Custom Endpoints
+
+In order to tidy up the url endpoints, we can add a `MapControllerRoute()` method below the default. Adding this method can help with creating API endpoints. See Program.cs line 27.
+
 
 ## Tech Stack
 

@@ -24,4 +24,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Blog Endpoint rebinding example
+app.MapControllerRoute(
+    name: "hello",
+    // Note the controller, the action method, and the two params as queries in the url
+    pattern: "{controller=Blog}/{action=PassData}/{name?}/{num?}"
+);
+
 app.Run();
