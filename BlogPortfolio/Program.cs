@@ -1,7 +1,24 @@
+using BlogPortfolio;
+using BlogPortfolio.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Set connection string and mapping with dbcontext
+// Note that the GetConnectionString() Method should reference the appsettings.json connectionstring
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<BlogPortfolioDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+else
+{
+    builder.Services.AddDbContext<BlogPortfolioDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 var app = builder.Build();
 
@@ -23,5 +40,12 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Blog Endpoint rebinding example
+app.MapControllerRoute(
+    name: "hello",
+    // Note the controller, the action method, and the two params as queries in the url
+    pattern: "{controller=Blog}/{action=PassData}/{name?}/{num?}"
+);
 
 app.Run();
