@@ -48,9 +48,8 @@ public class BlogController : Controller
 
     //
     // GET: /Blog/Post/{index}
-    // Side Note ^^ this is not fully functional
-    // I need to create the model and seed data before 
-    // adding the functionality here.
+    // TODO:: Fix Details.cshtml view, ensure that data is 
+    //        passed via ID through the view
     public IActionResult Details()
     {
         return View();
