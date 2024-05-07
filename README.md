@@ -13,6 +13,14 @@ This project is built to help me further understand the ASP.NET dev environment 
     - [MVC Architecture](#the-mvc-architecture)
     - [First Looks](#our-first-look-at-the-template-files)
     - [Adding a Controller](#adding-a-controller)
+    - [Adding a View](#adding-a-view)
+    - [Adding a Model](#adding-a-model)
+    - [DbContext](#dbcontext)
+    - [Connection Strings](#connection-strings)
+    - [Migrations](#migrations)
+    - [CRUD Operations](#crud-operations)
+    - [Adding a dotnet package](#)
+    - [Seed Data](#seed-data)
 - [Tech Stack](#tech-stack)
 - [Resources](#resources)
 
@@ -141,11 +149,130 @@ To help with navigation following the creation of the view, note the comments in
 
 As previously mentioned, Models are the structure for the data that we have within the applications database. Each model represents a table within the database. In this case, to keep things simple, we will look at creating a 'BlogPost' model. 
 
-Models are sets of classes which represent domain data and logic for the application. (See /Controllers/BlogController.cs) 
+Models are sets of classes which represent domain data and logic for the application. (See /Controllers/BlogController.cs)
 
 #### Setting Custom Endpoints
 
 In order to tidy up the url endpoints, we can add a `MapControllerRoute()` method below the default. Adding this method can help with creating API endpoints. See Program.cs line 27.
+
+*Side Note*: most of the walkthrough will be written in the comments from this point forward. With key points being added as I progress through the project. 
+
+### DbContext
+
+The main class that handles the mapping of Entity Framework (EF) is the DbContext, or database context class. This is an EF specific class which specifies the entities to be included in the data model. See <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-8.0" target="_blank" referrer="noopener noreferrer">documentation</a> for details.
+
+Our DbContext is stored in the `/Data` directory under `BlogPortfolioDbContext.cs`. 
+
+### Connection Strings
+
+ASP.NETCore includes a design pattern known as Dependency Injection. This is a technique which achieves inversion of control between classes and dependencies. A connection string is a property that is defined within the `appsettings.json` file. Each .NET framework data provider has a Connection object which inherits from <a href="https://learn.microsoft.com/en-us/dotnet/api/system.data.common.dbconnection?view=net-8.0" target="_blank" referrer="noopener noreferrer">DbConnection</a> . There are many resources for Connection String Syntax, both with the official documentation and various cheatsheets. See [resources](#resources) for more details.
+
+Once we have created our connection string and linked it via the `Program.cs` file, (see line 10), we can move onto creating the database with an initial migration.
+
+### Migrations
+
+An EF migration is a way to incrementally update a database schema to keep it in sync with hte applciations data model without manipulating the existing data within the database. See the Microsoft <a href="https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli" target="_blank" referrer="noopener noreferrer">documentation</a> for further information. 
+
+To create a migration we create our model, then run the command:
+```
+// Creates a migration based on the models currently created.
+dotnet ef migrations add <MIGRATIONNAME>
+```
+
+This will create a directory called `Migrations` and then subsequently generate files. These are table models which help the program map the data to tables in the database. 
+
+Be sure to read through the generated migration files to understand what each file achieves. 
+
+Once we have the schema, we the run:
+
+```
+// updates the database schema 
+dotnet ef database update
+```
+This command creates the databse and tables within it, following the migration mapping. 
+
+As our application grows in scale, we will likely need to update our database schema. To do this we now run:
+
+```
+dotnet ef migrations add <UPDATEDMIGRATION>
+dotnet ef database update
+```
+
+In full the process would look like the following example:
+
+```
+// initial migration
+dotnet ef migrations add InitialCreate
+
+// create database
+dotnet ef database update
+
+/* Adding further models and data */
+
+// create a new migreation
+dotnet ef migrations add UpdateTimestampMigration
+
+// update database 
+dotnet ef database update
+```
+
+Once we have our database created, we update our controller with dependency injection (see line 9 of `/Models/BlogController.cs`) to allow the relational mapping of the database to the CRUD operations we are about to create.
+
+### CRUD Operations
+
+CRUD (Create, Read, Update, Delete) operations, are the four basic database operations, allowing us to handle various functions on a database. See [resources](#resources) for documentation and walkthrough. 
+
+For our application we will create the following views in order to handle these operations.
+
+#### Create
+
+HTTP POST requests. To handle this operation, we will create a view with an asp-controller form which takes user input following the BlogPost model, minus the ID which is generated automatically alongside the published date.
+
+#### Read
+
+HTTP GET requests, we will create two views to handle these requests, our Index.cshtml will list all blogposts, displaying a brief overview of the existing data. Including the title, featured image, short description, and the published date of the post. We will also be able to create a blogpost from this page.
+
+The second view we will create is a Post.cshtml, showing an individual blogpost. From here we will be able to edit and delete the posts.
+
+In order to differentiate which view is shown, we will create an endpoint which takes the ID to filter between posts. 
+
+#### Update
+
+HTTP PUT requests. Our view for this will look similar to the create view, with the caveat that the form is filled with the existing data of the blogpost.
+
+#### Delete
+
+HTTP DELETE requests. The view for a delete request will be an endpoint reached from the Read/{ID} endpoint. After clicking the delete button, the user will be brought to this view with a confirmation warning message. 
+
+#### Updating the controller
+
+In order to handle the various views and functionality, we first need to update our Controller. 
+
+### Adding a dotnet package
+
+Packages and tools for development are code that has been written to help streamline the development process, our project is dependent on various packages and would not run without these installed without first writing the code ourselves.
+
+To add dependencies and packages, we run the command:
+
+``` 
+// removes previously installed global tools
+dotnet tool uninstall --global <TOOLNAME>
+
+// adds dotnet tools
+dotnet tool install <TOOLNAME>
+
+// removes a package from the application
+dotnet remove package <PACKAGENAME>
+
+// Adds a package for a dotnet appliaction
+dotnet add package <PACKAGENAME>
+```
+
+The tools and packages that we shall use in this application can be found in [Tech Stack](#tech-stack). The packages are stored under `/Dependencies/Packages/<PACKAGENAME>`
+
+### Seed Data
+
+Seed Data is data that is fed to the application as default. When running an application we use Seed Data as template input. We can use the SeedData.cs model to feed data into the database for initial migrations. See [resources](#resources) for details and documentation walkthrough. In our example, we will feed in a few lorem ipsum (dummy text) BlogPost models to begin structuring our application.
 
 
 ## Tech Stack
@@ -165,6 +292,14 @@ In order to tidy up the url endpoints, we can add a `MapControllerRoute()` metho
 ## Resources
 
 Sameer Saini - Content Creator and Course Instructor for ASP.NET - <a href="https://www.youtube.com/@SameerSaini" target="_blank" referrer="noreferrer noopener">Youtube</a>
+
+Database Seeding - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/ef/core/modeling/data-seeding" target="_blank" referrer="noreferrer noopener">Link</a>
+
+CRUD Operations - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/crud?view=aspnetcore-8.0" target="_blank" referrer="noreferrer noopener">Link</a>
+
+ConnectionStrings - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/connection-string-syntax" target="_blank" referrer="noreferrer noopener">Link</a>
+
+ConnectionStrings - Syntax Cheatsheet - <a href="https://www.connectionstrings.com/" target="_blank" referrer="noreferrer noopener">Link</a>
 
 ## Support
 

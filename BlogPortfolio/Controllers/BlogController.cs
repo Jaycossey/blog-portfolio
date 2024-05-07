@@ -1,10 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlogPortfolio.Data;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 
 namespace BlogPortfolio;
 
 public class BlogController : Controller
 {
+    // dependency injection 
+    private readonly BlogPortfolioDbContext _context;
+    public BlogController(BlogPortfolioDbContext context)
+    {
+        // assigns the context relational mapping for the 
+        // controller
+        _context = context;
+    }
     // 
     // GET: /Blog/HelloWorld/
     public string HelloWorld()
@@ -40,7 +49,33 @@ public class BlogController : Controller
     {
         return View();
     }
+
+    // 
+    // GET: /Blog/Create/
+    public IActionResult Create()
+    {
+        // Returns a create view to handle creation of
+        // blog posts.
+
+        return View();
+    }
+    //
+    // GET: /Blog/Update/
+    public IActionResult Update()
+    {
+        // Returns the update Blog view
+
+        return View();
+    }
+    //
+    // GET: /Blog/Delete/
+    public IActionResult Delete()
+    {
+        // returns the delete blog view (confirmation warning)
+        return View();
+    }
 }
+
 
 /*
     Notes:
@@ -50,6 +85,6 @@ public class BlogController : Controller
 
         We can pass data to views using the arguments as extensions to the 
         endpoints. The /Blog/PassData endpoint takes name and num as params.
-        To ensure this endpoint works in the comment (line 17) we add in some 
-        code in our Program.cs file.
+        To ensure this endpoint works in the comment (line 26) we add in some 
+        code in our Program.cs file. (line 44)
 */
