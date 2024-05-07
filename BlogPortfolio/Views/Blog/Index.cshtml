@@ -2,4 +2,54 @@
     ViewData["Title"] = "Blog";
 }
 
-<h1>Hello Blog</h1>
+<h1>Blog Posts</h1>
+<h4>A collection of blog posts containing fun things I have learned in my software development career.</h4>
+<hr/>
+<a class="nav-link"
+    asp-area=""
+    asp-controller="Blog"
+    asp-action="Create">Create a Blog Post</a>
+
+<ul class="container">
+    @for(int i = 0; i < 5; i++)
+    {
+        <li class="card 
+                    p-3 
+                    my-3 
+                    bg-light 
+                    blog-list-item
+                    flex
+                    flex-md-row">
+            <img src="/path/example" 
+                alt="Featured image for blog post"
+                class="img-thumbnail
+                        rounded
+                        img-fluid"
+                style="max-width: 100%;
+                        min-width: 200px;
+                        min-height: 220px;" />
+            <div class="p-3">
+                <h2>Post Title</h2>
+                <p>Post Short Desc Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis facere illo, commodi repellendus provident doloremque fuga dignissimos facilis sequi neque! Veritatis eum tempora odio non sint beatae</p>
+                <p>@DateTime.Now.Year</p>
+                <div class="card
+                            flex-row
+                            small"
+                        style="width: max-content">
+                    <a class="nav-link"
+                        asp-area=""
+                        asp-controller="Blog"
+                        asp-action="Details">Read More</a>
+                    <a class="nav-link"
+                        asp-area=""
+                        asp-controller="Blog"
+                        asp-action="Update">Update</a>
+                    <a class="nav-link"
+                        asp-area=""
+                        asp-controller="Blog"
+                        asp-action="Delete">Delete</a>
+                </div>
+            </div>
+        </li>
+    }
+</ul>

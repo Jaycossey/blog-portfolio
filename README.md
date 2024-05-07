@@ -15,11 +15,11 @@ This project is built to help me further understand the ASP.NET dev environment 
     - [Adding a Controller](#adding-a-controller)
     - [Adding a View](#adding-a-view)
     - [Adding a Model](#adding-a-model)
+    - [Adding a dotnet package](#adding-a-dotnet-package)
     - [DbContext](#dbcontext)
     - [Connection Strings](#connection-strings)
     - [Migrations](#migrations)
     - [CRUD Operations](#crud-operations)
-    - [Adding a dotnet package](#)
     - [Seed Data](#seed-data)
 - [Tech Stack](#tech-stack)
 - [Resources](#resources)
@@ -157,6 +157,28 @@ In order to tidy up the url endpoints, we can add a `MapControllerRoute()` metho
 
 *Side Note*: most of the walkthrough will be written in the comments from this point forward. With key points being added as I progress through the project. 
 
+### Adding a dotnet package
+
+Packages and tools for development are code that has been written to help streamline the development process, our project is dependent on various packages and would not run without these installed without first writing the code ourselves.
+
+To add dependencies and packages, we run the command:
+
+``` 
+// removes previously installed global tools
+dotnet tool uninstall --global <TOOLNAME>
+
+// adds dotnet tools
+dotnet tool install <TOOLNAME>
+
+// removes a package from the application
+dotnet remove package <PACKAGENAME>
+
+// Adds a package for a dotnet appliaction
+dotnet add package <PACKAGENAME>
+```
+
+The tools and packages that we shall use in this application can be found in [Tech Stack](#tech-stack). The packages are stored under `/Dependencies/Packages/<PACKAGENAME>`
+
 ### DbContext
 
 The main class that handles the mapping of Entity Framework (EF) is the DbContext, or database context class. This is an EF specific class which specifies the entities to be included in the data model. See <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-8.0" target="_blank" referrer="noopener noreferrer">documentation</a> for details.
@@ -224,6 +246,7 @@ CRUD (Create, Read, Update, Delete) operations, are the four basic database oper
 
 For our application we will create the following views in order to handle these operations.
 
+
 #### Create
 
 HTTP POST requests. To handle this operation, we will create a view with an asp-controller form which takes user input following the BlogPost model, minus the ID which is generated automatically alongside the published date.
@@ -232,7 +255,7 @@ HTTP POST requests. To handle this operation, we will create a view with an asp-
 
 HTTP GET requests, we will create two views to handle these requests, our Index.cshtml will list all blogposts, displaying a brief overview of the existing data. Including the title, featured image, short description, and the published date of the post. We will also be able to create a blogpost from this page.
 
-The second view we will create is a Post.cshtml, showing an individual blogpost. From here we will be able to edit and delete the posts.
+The second view we will create is a Details.cshtml, showing an individual blogpost. From here we will be able to edit and delete the posts.
 
 In order to differentiate which view is shown, we will create an endpoint which takes the ID to filter between posts. 
 
@@ -247,28 +270,6 @@ HTTP DELETE requests. The view for a delete request will be an endpoint reached 
 #### Updating the controller
 
 In order to handle the various views and functionality, we first need to update our Controller. 
-
-### Adding a dotnet package
-
-Packages and tools for development are code that has been written to help streamline the development process, our project is dependent on various packages and would not run without these installed without first writing the code ourselves.
-
-To add dependencies and packages, we run the command:
-
-``` 
-// removes previously installed global tools
-dotnet tool uninstall --global <TOOLNAME>
-
-// adds dotnet tools
-dotnet tool install <TOOLNAME>
-
-// removes a package from the application
-dotnet remove package <PACKAGENAME>
-
-// Adds a package for a dotnet appliaction
-dotnet add package <PACKAGENAME>
-```
-
-The tools and packages that we shall use in this application can be found in [Tech Stack](#tech-stack). The packages are stored under `/Dependencies/Packages/<PACKAGENAME>`
 
 ### Seed Data
 

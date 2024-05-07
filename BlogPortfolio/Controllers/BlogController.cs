@@ -45,7 +45,7 @@ public class BlogController : Controller
     // Side Note ^^ this is not fully functional
     // I need to create the model and seed data before 
     // adding the functionality here.
-    public IActionResult Post()
+    public IActionResult Details()
     {
         return View();
     }
