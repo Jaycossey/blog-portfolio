@@ -1,5 +1,6 @@
 ﻿using BlogPortfolio.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 
 namespace BlogPortfolio;
@@ -32,12 +33,17 @@ public class BlogController : Controller
 
     // 
     // GET: /Blog/
-    public IActionResult Index()
+    // Note, the updated Index action method is now an async task, 
+    // we call the async function to retrieve the data from the seeded database
+    public async Task<IActionResult> Index()
     {
         // returns the /Views/Blog/Index.cshtml file
         // the view is positioned in the /Views/Shared/_Layout.cshtml
         // in the RenderBody() method.
-        return View();
+        // 
+        // When returning the view, we pass the listed blogposts via dependency
+        // injection in order for us to list the items.
+        return View(await _context.BlogPosts.ToListAsync());
     }
 
     //

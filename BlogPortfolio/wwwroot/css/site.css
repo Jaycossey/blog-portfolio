@@ -31,7 +31,3 @@ header {
 main {
   padding-top: 60px;
 }
-
-.blog-text-right > * {
-  text-align: right;
-}

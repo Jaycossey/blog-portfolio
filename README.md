@@ -275,6 +275,13 @@ In order to handle the various views and functionality, we first need to update 
 
 Seed Data is data that is fed to the application as default. When running an application we use Seed Data as template input. We can use the SeedData.cs model to feed data into the database for initial migrations. See [resources](#resources) for details and documentation walkthrough. In our example, we will feed in a few lorem ipsum (dummy text) BlogPost models to begin structuring our application.
 
+Once we have created and updated our seedData file, we need to add the feed into our `Program.cs` (see line 26).
+
+### Feeding data to the Views
+
+Now that we have seed data, a database, and our basic crud operations, we need to edit the code within the Controller to display that data and handle the functionality of the CRUD operations. 
+
+The specifics (including comments and breakdown) are in the Blog Controller under the respective Action Methods and in the Views. 
 
 ## Tech Stack
 

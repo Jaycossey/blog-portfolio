@@ -1,5 +1,6 @@
 using BlogPortfolio;
 using BlogPortfolio.Data;
+using BlogPortfolio.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,14 @@ else
 }
 
 var app = builder.Build();
+
+// Create and feed in the seedData 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

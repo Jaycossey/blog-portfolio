@@ -1,3 +1,6 @@
+@* Reference the model type *@
+@model IEnumerable<BlogPost>
+
 @{
     ViewData["Title"] = "Blog";
 }
@@ -11,7 +14,7 @@
     asp-action="Create">Create a Blog Post</a>
 
 <ul class="container">
-    @for(int i = 0; i < 5; i++)
+    @foreach(var item in Model)
     {
         <li class="card 
                     p-3 
@@ -29,9 +32,9 @@
                         min-width: 200px;
                         min-height: 220px;" />
             <div class="p-3">
-                <h2>Post Title</h2>
-                <p>Post Short Desc Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis facere illo, commodi repellendus provident doloremque fuga dignissimos facilis sequi neque! Veritatis eum tempora odio non sint beatae</p>
-                <p>@DateTime.Now.Year</p>
+                <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                <p>@Html.DisplayFor(modelItem => item.ShortDescription)</p>
+                <p>@Html.DisplayFor(modelIten => item.PublishedDate)</p>
                 <div class="card
                             flex-row
                             small"
