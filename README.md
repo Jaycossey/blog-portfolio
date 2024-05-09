@@ -312,3 +312,12 @@ ConnectionStrings - Syntax Cheatsheet - <a href="https://www.connectionstrings.c
 ## Support
 
 Raise an issue on this <a href="https://github.com/Jaycossey/blog-portfolio" target="_blank" referrer="noreferrer noopener">repo</a> for further support, or contact me via my existing <a href="https://ianscott.netlify.app/" target="_blank" referrer="noreferrer noopener">portfolio</a>
+
+
+### Side Notes and TODO's:
+
+When working with SQL databases and SQLServer, migrations work the same, the difference is in the dbcontext, which is a reference to the connection strings, these are tailored with the syntax to contextualise the connected server, as well as the database within it. Database files are created with the migrations, so the tables dont exist prior to running the migration commands. 
+
+We also see how the SQL commands work when making endpoint calls within controllers. If we read the terminal when switching to the Blog/Index, we see a SELECT * FROM command, which we know (source w3Schools) is select all from database. These calls run through the dbcontext to target the specific database. 
+
+When connected to a SQLServer, whether that is via mssql or sqlserver within the vscode extention, we can make direct SQL queries to this and write out own SQL. This is very useful when creating APIs and designing those endpoints, we have the option, essentially, to create edits to the server without having to be using the application, provided that we are connected to that server. - THIS IS VERY IMPORTANT knowledge, especially as I progress through my CyberSec course. Knowing how the SQL commands work, allows for potential SQLInjection attacks, providing we are connected to the server, its how hackers and pentesters can access data.

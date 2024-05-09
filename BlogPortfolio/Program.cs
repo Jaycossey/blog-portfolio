@@ -57,4 +57,26 @@ app.MapControllerRoute(
     pattern: "{controller=Blog}/{action=PassData}/{name?}/{num?}"
 );
 
+// Route mapping for blogposts by ID filter
+app.MapControllerRoute(
+    name: "blogDetails",
+    pattern: "{controller=Blog}/{action=Details}/{id?}"
+);
+
+app.MapControllerRoute(
+    name: "edit",
+    pattern: "{controller=Blog}/{action=Create}"
+);
+
+app.MapControllerRoute(
+    name: "update",
+    pattern: "{controller=Blog}/{action=Update}/{id?}"
+);
+
+app.MapControllerRoute(
+    name: "delete",
+    pattern: "{controller=Blog}/{action=Delete}/{id?}"
+);
+
+
 app.Run();

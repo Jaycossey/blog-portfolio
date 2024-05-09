@@ -39,18 +39,29 @@
                             flex-row
                             small"
                         style="width: max-content">
+                        
+                    @* Anchor links for CRUD Ops endpoints *@
                     <a class="nav-link"
                         asp-area=""
                         asp-controller="Blog"
-                        asp-action="Details">Read More</a>
+                        asp-action="Details"
+                        asp-route-id="@item.Id">Read More</a>
                     <a class="nav-link"
                         asp-area=""
                         asp-controller="Blog"
-                        asp-action="Update">Update</a>
+                        asp-action="Update"
+                        asp-route-id="@item.Id">Update</a>
+                    
+                    @* TODO: 
+                            CHANGE THIS A TAG TO HIDDEN AND A CONFIRMATION
+                            WINDOW, RENDER DYNAMICALLY WITH JS - that is the 
+                            front end after all
+                        *@
                     <a class="nav-link"
                         asp-area=""
                         asp-controller="Blog"
-                        asp-action="Delete">Delete</a>
+                        asp-action="Delete"
+                        asp-route-id="@item.Id">Delete</a>
                 </div>
             </div>
         </li>

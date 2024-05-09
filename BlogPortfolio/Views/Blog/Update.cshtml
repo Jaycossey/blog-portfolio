@@ -1,0 +1,55 @@
+@model BlogPost
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+<h1>Edit Post</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <div>
+            @* Checks validation for whole form *@
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" } )
+            @* Title Inputs and validations *@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class="control-label col-md-2"})
+                @Html.EditorFor(model => model.Title, "", new {@class="form-control"})
+                @Html.ValidationMessageFor(model => model.Title, "", new {@class="text-danger"})
+            </div>
+            @* Author Inputs and validation *@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Author, htmlAttributes: new { @class="control-label col-md-2"})
+                @Html.EditorFor(model => model.Author, "", new {@class="form-control"})
+                @Html.ValidationMessageFor(model => model.Author, "", new {@class="text-danger"})
+            </div>
+            @* Description Inputs and validations *@
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class="control-label col-md-2"})
+                @Html.EditorFor(model => model.ShortDescription, "", new {@class="form-control"})
+                @Html.ValidationMessageFor(model => model.ShortDescription, "", new {@class="text-danger"})
+            </div>
+            @* Content of blogpost, Inputs and validations *@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class="control-label col-md-2"})
+                @Html.EditorFor(model => model.Content, "", new {@class="form-control"})
+                @Html.ValidationMessageFor(model => model.Content, "", new {@class="text-danger"})
+            </div>
+
+            @* Submit button *@
+            <input type="submit" value="Update" class="btn btn-dark" />
+
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Back to list", "Index")
+</p>
