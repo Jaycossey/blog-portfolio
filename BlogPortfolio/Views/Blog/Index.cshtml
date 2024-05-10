@@ -7,6 +7,7 @@
 
 <h1>Blog Posts</h1>
 <h4>A collection of blog posts containing fun things I have learned in my software development career.</h4>
+
 <hr/>
 <a class="nav-link"
     asp-area=""
@@ -57,13 +58,19 @@
                             WINDOW, RENDER DYNAMICALLY WITH JS - that is the 
                             front end after all
                         *@
-                    <a class="nav-link"
+                    @* <a class="nav-link"
                         asp-area=""
                         asp-controller="Blog"
                         asp-action="Delete"
-                        asp-route-id="@item.Id">Delete</a>
+                        asp-route-id="@item.Id">Delete</a> *@
+                    @* <div id="confirm-container" onclick="conditionalRender()"></div> *@
                 </div>
             </div>
         </li>
     }
+    @* <script language="javascript">
+        const conditionalRender = () => {
+            console.log(event.target);
+        }
+    </script> *@
 </ul>

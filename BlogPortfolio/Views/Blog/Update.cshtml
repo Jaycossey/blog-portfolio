@@ -2,13 +2,7 @@
 
 @{
     ViewData["Title"] = "Update";
-}
-
-@if (ViewBag.Message != null)
-{
-    <p class="alert alert-success" role="alert">
-        @ViewBag.Message
-    </p>
+    var thisId = Model.Id;
 }
 
 <h1>Edit Post</h1>
@@ -48,8 +42,52 @@
             <input type="submit" value="Update" class="btn btn-dark" />
 
     </div>
+
+    @* Delete button *@
+    <button type="button" class="btn btn-danger" onclick="toggleVisible()">
+        Delete
+    </button>
 }
 
+@* Alert container *@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div id="alert" class="d-none">
+        <p>This will permanantly remove the post from the database.</p>
+        <p>Are you sure you want to continue?</p>
+        <button type="button" class="btn btn-success">
+            @Html.ActionLink("Delete Post", "Delete", "Blog", new {id = thisId}, new {@class="text-white text-decoration-none"})
+        </button>
+        <button type="button" class="btn btn-dark" onclick="toggleVisible()">
+            Cancel
+        </button>
+    </div>
+}
+
+@* Return to Index list *@
 <p>
     @Html.ActionLink("Back to list", "Index")
 </p>
+
+<script>
+    // Target confirmation container
+    const alertCont = document.getElementById('alert');
+    // Bool for alert window visibility
+    let visible = false;
+    console.log()
+
+    // toggle visibility via classList
+    const toggleVisible = () => {
+        if (!visible) {
+            alertCont.classList = "";
+            visible = true;
+            return;
+        }
+
+        alertCont.classList = "d-none";
+        visible = false;
+        return;
+    }
+
+</script>

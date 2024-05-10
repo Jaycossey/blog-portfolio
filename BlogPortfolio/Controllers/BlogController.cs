@@ -1,6 +1,7 @@
 ﻿using BlogPortfolio.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System.Text.Encodings.Web;
 
@@ -120,34 +121,27 @@ public class BlogController : Controller
             data.Content = model.Content;
             _context.SaveChanges();
         }
-
+        
         return RedirectToAction("Index");
     }
     //
-    // GET: /Blog/Delete/
-    [HttpDelete]
-    public ActionResult Delete(Guid id)
+    // GET: /Blog/Delete/{id}
+    // Called via the update view, with the items id passed as params
+    // should return to index view upon completion
+    public IActionResult Delete(Guid id)
     {
-        // TODO:
-        // Create a confirmation message which renders before continuing
-        // this function. Rather than this being triggered by an <a> tag, 
-        // I can instead change that with some JS. The button should be a
-        // pre-cursor to this asp-action. Have a hidden button which has 
-        // "confirm: y/n" this hidden button should be the asp-action. So
-        // change the original link to be a basic button that has an onClick 
-        // event handler to update the visibility on the confirmation button.
+        // find blogpost via id
         var data = _context.BlogPosts.Where(x => x.Id == id).FirstOrDefault();
-        
-        
-        if (data != null)
-        {
-            _context.BlogPosts.Remove(data);
-            _context.SaveChanges();
-            ViewBag.Message = "Deleted Successfully";
-        }
+
+        // remove from database and save changes
+        _context.BlogPosts.Remove(data);
+        _context.SaveChanges();
         return RedirectToAction("Index");
     }
+
 }
+
+
 
 
 /*
