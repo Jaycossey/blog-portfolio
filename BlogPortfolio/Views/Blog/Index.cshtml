@@ -1,5 +1,76 @@
+@* Reference the model type *@
+@model IEnumerable<BlogPost>
+
 @{
     ViewData["Title"] = "Blog";
 }
 
-<h1>Hello Blog</h1>
+<h1>Blog Posts</h1>
+<h4>A collection of blog posts containing fun things I have learned in my software development career.</h4>
+
+<hr/>
+<a class="nav-link"
+    asp-area=""
+    asp-controller="Blog"
+    asp-action="Create">Create a Blog Post</a>
+
+<ul class="container">
+    @foreach(var item in Model)
+    {
+        <li class="card 
+                    p-3 
+                    my-3 
+                    bg-light 
+                    blog-list-item
+                    flex
+                    flex-md-row">
+            <img src="/path/example" 
+                alt="Featured image for blog post"
+                class="img-thumbnail
+                        rounded
+                        img-fluid"
+                style="max-width: 100%;
+                        min-width: 200px;
+                        min-height: 220px;" />
+            <div class="p-3">
+                <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                <p>@Html.DisplayFor(modelItem => item.ShortDescription)</p>
+                <p>@Html.DisplayFor(modelIten => item.PublishedDate)</p>
+                <div class="card
+                            flex-row
+                            small"
+                        style="width: max-content">
+                        
+                    @* Anchor links for CRUD Ops endpoints *@
+                    <a class="nav-link"
+                        asp-area=""
+                        asp-controller="Blog"
+                        asp-action="Details"
+                        asp-route-id="@item.Id">Read More</a>
+                    <a class="nav-link"
+                        asp-area=""
+                        asp-controller="Blog"
+                        asp-action="Update"
+                        asp-route-id="@item.Id">Update</a>
+                    
+                    @* TODO: 
+                            CHANGE THIS A TAG TO HIDDEN AND A CONFIRMATION
+                            WINDOW, RENDER DYNAMICALLY WITH JS - that is the 
+                            front end after all
+                        *@
+                    @* <a class="nav-link"
+                        asp-area=""
+                        asp-controller="Blog"
+                        asp-action="Delete"
+                        asp-route-id="@item.Id">Delete</a> *@
+                    @* <div id="confirm-container" onclick="conditionalRender()"></div> *@
+                </div>
+            </div>
+        </li>
+    }
+    @* <script language="javascript">
+        const conditionalRender = () => {
+            console.log(event.target);
+        }
+    </script> *@
+</ul>

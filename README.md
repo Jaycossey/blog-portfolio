@@ -15,11 +15,11 @@ This project is built to help me further understand the ASP.NET dev environment 
     - [Adding a Controller](#adding-a-controller)
     - [Adding a View](#adding-a-view)
     - [Adding a Model](#adding-a-model)
+    - [Adding a dotnet package](#adding-a-dotnet-package)
     - [DbContext](#dbcontext)
     - [Connection Strings](#connection-strings)
     - [Migrations](#migrations)
     - [CRUD Operations](#crud-operations)
-    - [Adding a dotnet package](#)
     - [Seed Data](#seed-data)
 - [Tech Stack](#tech-stack)
 - [Resources](#resources)
@@ -157,6 +157,28 @@ In order to tidy up the url endpoints, we can add a `MapControllerRoute()` metho
 
 *Side Note*: most of the walkthrough will be written in the comments from this point forward. With key points being added as I progress through the project. 
 
+### Adding a dotnet package
+
+Packages and tools for development are code that has been written to help streamline the development process, our project is dependent on various packages and would not run without these installed without first writing the code ourselves.
+
+To add dependencies and packages, we run the command:
+
+``` 
+// removes previously installed global tools
+dotnet tool uninstall --global <TOOLNAME>
+
+// adds dotnet tools
+dotnet tool install <TOOLNAME>
+
+// removes a package from the application
+dotnet remove package <PACKAGENAME>
+
+// Adds a package for a dotnet appliaction
+dotnet add package <PACKAGENAME>
+```
+
+The tools and packages that we shall use in this application can be found in [Tech Stack](#tech-stack). The packages are stored under `/Dependencies/Packages/<PACKAGENAME>`
+
 ### DbContext
 
 The main class that handles the mapping of Entity Framework (EF) is the DbContext, or database context class. This is an EF specific class which specifies the entities to be included in the data model. See <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-8.0" target="_blank" referrer="noopener noreferrer">documentation</a> for details.
@@ -224,6 +246,7 @@ CRUD (Create, Read, Update, Delete) operations, are the four basic database oper
 
 For our application we will create the following views in order to handle these operations.
 
+
 #### Create
 
 HTTP POST requests. To handle this operation, we will create a view with an asp-controller form which takes user input following the BlogPost model, minus the ID which is generated automatically alongside the published date.
@@ -232,7 +255,7 @@ HTTP POST requests. To handle this operation, we will create a view with an asp-
 
 HTTP GET requests, we will create two views to handle these requests, our Index.cshtml will list all blogposts, displaying a brief overview of the existing data. Including the title, featured image, short description, and the published date of the post. We will also be able to create a blogpost from this page.
 
-The second view we will create is a Post.cshtml, showing an individual blogpost. From here we will be able to edit and delete the posts.
+The second view we will create is a Details.cshtml, showing an individual blogpost. From here we will be able to edit and delete the posts.
 
 In order to differentiate which view is shown, we will create an endpoint which takes the ID to filter between posts. 
 
@@ -242,38 +265,29 @@ HTTP PUT requests. Our view for this will look similar to the create view, with 
 
 #### Delete
 
-HTTP DELETE requests. The view for a delete request will be an endpoint reached from the Read/{ID} endpoint. After clicking the delete button, the user will be brought to this view with a confirmation warning message. 
+This endpoint will be triggered from within the Update view, as part of the editing functionality, hidden behind a JS conditional render of a confirm button.
 
 #### Updating the controller
 
 In order to handle the various views and functionality, we first need to update our Controller. 
 
-### Adding a dotnet package
-
-Packages and tools for development are code that has been written to help streamline the development process, our project is dependent on various packages and would not run without these installed without first writing the code ourselves.
-
-To add dependencies and packages, we run the command:
-
-``` 
-// removes previously installed global tools
-dotnet tool uninstall --global <TOOLNAME>
-
-// adds dotnet tools
-dotnet tool install <TOOLNAME>
-
-// removes a package from the application
-dotnet remove package <PACKAGENAME>
-
-// Adds a package for a dotnet appliaction
-dotnet add package <PACKAGENAME>
-```
-
-The tools and packages that we shall use in this application can be found in [Tech Stack](#tech-stack). The packages are stored under `/Dependencies/Packages/<PACKAGENAME>`
-
 ### Seed Data
 
 Seed Data is data that is fed to the application as default. When running an application we use Seed Data as template input. We can use the SeedData.cs model to feed data into the database for initial migrations. See [resources](#resources) for details and documentation walkthrough. In our example, we will feed in a few lorem ipsum (dummy text) BlogPost models to begin structuring our application.
 
+Once we have created and updated our seedData file, we need to add the feed into our `Program.cs` (see line 26).
+
+### Feeding data to the Views
+
+Now that we have seed data, a database, and our basic crud operations, we need to edit the code within the Controller to display that data and handle the functionality of the CRUD operations. 
+
+The specifics (including comments and breakdown) are in the Blog Controller under the respective Action Methods and in the Views. 
+
+### Remaining code
+
+When we have created our data and fed it into our application via SeedData, as well as creating the references via DbContext, we can create our CRUD functionality, this is described in the BlogController.cs file. See [resources](#resources) for more information.
+
+Once our CRUD operations are finalised, we can then use various CSS and JavaScript within our View files to customise the remaining application pages. 
 
 ## Tech Stack
 
@@ -295,12 +309,26 @@ Sameer Saini - Content Creator and Course Instructor for ASP.NET - <a href="http
 
 Database Seeding - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/ef/core/modeling/data-seeding" target="_blank" referrer="noreferrer noopener">Link</a>
 
-CRUD Operations - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/crud?view=aspnetcore-8.0" target="_blank" referrer="noreferrer noopener">Link</a>
 
 ConnectionStrings - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/connection-string-syntax" target="_blank" referrer="noreferrer noopener">Link</a>
 
 ConnectionStrings - Syntax Cheatsheet - <a href="https://www.connectionstrings.com/" target="_blank" referrer="noreferrer noopener">Link</a>
 
+C# Syntax - w3Schools - <a href="https://www.w3schools.com/cs/index.php" target="_blank" referrer="noreferrer noopener">Link</a>
+
+CRUD Operations - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/crud?view=aspnetcore-8.0" target="_blank" referrer="noreferrer noopener">Link</a>
+
+CRUD Operations in MVC - C# Corner - <a href="https://www.c-sharpcorner.com/article/crud-operation-in-asp-net-mvc2/" target="_blank" referrer="noreferrer noopener">Link</a>
+
 ## Support
 
 Raise an issue on this <a href="https://github.com/Jaycossey/blog-portfolio" target="_blank" referrer="noreferrer noopener">repo</a> for further support, or contact me via my existing <a href="https://ianscott.netlify.app/" target="_blank" referrer="noreferrer noopener">portfolio</a>
+
+
+## Side Notes and TODO's:
+
+When working with SQL databases and SQLServer, migrations work the same, the difference is in the dbcontext, which is a reference to the connection strings, these are tailored with the syntax to contextualise the connected server, as well as the database within it. Database files are created with the migrations, so the tables dont exist prior to running the migration commands. 
+
+We also see how the SQL commands work when making endpoint calls within controllers. If we read the terminal when switching to the Blog/Index, we see a SELECT * FROM command, which we know (source w3Schools) is select all from database. These calls run through the dbcontext to target the specific database. 
+
+When connected to a SQLServer, whether that is via mssql or sqlserver within the vscode extention, we can make direct SQL queries to this and write out own SQL. This is very useful when creating APIs and designing those endpoints, we have the option, essentially, to create edits to the server without having to be using the application, provided that we are connected to that server. - THIS IS VERY IMPORTANT knowledge, especially as I progress through my CyberSec course. Knowing how the SQL commands work, allows for potential SQLInjection attacks, providing we are connected to the server, its how hackers and pentesters can access data.

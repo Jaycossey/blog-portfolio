@@ -1,0 +1,21 @@
+@* Reference the model type *@
+@model BlogPost
+    
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="card
+            border-2
+            px-3
+            pt-3">
+    <h1>@Model.Title</h1>
+    <hr class="w-2"></hr>
+    <h6>Author: @Model.Author</h6>
+    <h7 class="text-muted">Posted: @Model.PublishedDate</h7>
+    <p class="card alert-dark p-3">@Model.Content</p>
+</div>
+
+<p>
+    @Html.ActionLink("Back to list", "Index")
+</p>
