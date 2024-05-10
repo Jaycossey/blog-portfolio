@@ -265,7 +265,7 @@ HTTP PUT requests. Our view for this will look similar to the create view, with 
 
 #### Delete
 
-HTTP DELETE requests. The view for a delete request will be an endpoint reached from the Read/{ID} endpoint. After clicking the delete button, the user will be brought to this view with a confirmation warning message. 
+This endpoint will be triggered from within the Update view, as part of the editing functionality, hidden behind a JS conditional render of a confirm button.
 
 #### Updating the controller
 
@@ -282,6 +282,12 @@ Once we have created and updated our seedData file, we need to add the feed into
 Now that we have seed data, a database, and our basic crud operations, we need to edit the code within the Controller to display that data and handle the functionality of the CRUD operations. 
 
 The specifics (including comments and breakdown) are in the Blog Controller under the respective Action Methods and in the Views. 
+
+### Remaining code
+
+When we have created our data and fed it into our application via SeedData, as well as creating the references via DbContext, we can create our CRUD functionality, this is described in the BlogController.cs file. See [resources](#resources) for more information.
+
+Once our CRUD operations are finalised, we can then use various CSS and JavaScript within our View files to customise the remaining application pages. 
 
 ## Tech Stack
 
@@ -303,18 +309,23 @@ Sameer Saini - Content Creator and Course Instructor for ASP.NET - <a href="http
 
 Database Seeding - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/ef/core/modeling/data-seeding" target="_blank" referrer="noreferrer noopener">Link</a>
 
-CRUD Operations - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/crud?view=aspnetcore-8.0" target="_blank" referrer="noreferrer noopener">Link</a>
 
 ConnectionStrings - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/connection-string-syntax" target="_blank" referrer="noreferrer noopener">Link</a>
 
 ConnectionStrings - Syntax Cheatsheet - <a href="https://www.connectionstrings.com/" target="_blank" referrer="noreferrer noopener">Link</a>
+
+C# Syntax - w3Schools - <a href="https://www.w3schools.com/cs/index.php" target="_blank" referrer="noreferrer noopener">Link</a>
+
+CRUD Operations - Microsoft Documentation - <a href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/crud?view=aspnetcore-8.0" target="_blank" referrer="noreferrer noopener">Link</a>
+
+CRUD Operations in MVC - C# Corner - <a href="https://www.c-sharpcorner.com/article/crud-operation-in-asp-net-mvc2/" target="_blank" referrer="noreferrer noopener">Link</a>
 
 ## Support
 
 Raise an issue on this <a href="https://github.com/Jaycossey/blog-portfolio" target="_blank" referrer="noreferrer noopener">repo</a> for further support, or contact me via my existing <a href="https://ianscott.netlify.app/" target="_blank" referrer="noreferrer noopener">portfolio</a>
 
 
-### Side Notes and TODO's:
+## Side Notes and TODO's:
 
 When working with SQL databases and SQLServer, migrations work the same, the difference is in the dbcontext, which is a reference to the connection strings, these are tailored with the syntax to contextualise the connected server, as well as the database within it. Database files are created with the migrations, so the tables dont exist prior to running the migration commands. 
 

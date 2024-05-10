@@ -63,16 +63,19 @@ app.MapControllerRoute(
     pattern: "{controller=Blog}/{action=Details}/{id?}"
 );
 
+// Route mapping for create blog action
 app.MapControllerRoute(
     name: "edit",
     pattern: "{controller=Blog}/{action=Create}"
 );
 
+// Route mapping for update action with ID param
 app.MapControllerRoute(
     name: "update",
     pattern: "{controller=Blog}/{action=Update}/{id?}"
 );
 
+// Delete route mapping with ID param
 app.MapControllerRoute(
     name: "delete",
     pattern: "{controller=Blog}/{action=Delete}/{id?}"
