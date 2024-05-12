@@ -22,4 +22,14 @@ public class PortfolioController : Controller
     {
         return View(await _context.Projects.ToListAsync());
     }
+
+    // 
+    // GET: /Portfolio/Edit/
+    [HttpGet]
+    public IActionResult Edit(Guid? id)
+    {
+        var project = _context.Projects.Where(x => x.Id == id).FirstOrDefault();
+
+        return View(project);
+    }
 }
