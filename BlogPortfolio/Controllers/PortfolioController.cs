@@ -18,8 +18,8 @@ public class PortfolioController : Controller
 
     // 
     // GET: /Portfolio/
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        return View(await _context.Projects.ToListAsync());
     }
 }

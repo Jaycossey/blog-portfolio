@@ -3,6 +3,7 @@ using System;
 using BlogPortfolio.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogPortfolio.Migrations
 {
     [DbContext(typeof(BlogPortfolioDbContext))]
-    partial class BlogPortfolioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240512090319_ProjectsAdded")]
+    partial class ProjectsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
