@@ -287,7 +287,15 @@ The specifics (including comments and breakdown) are in the Blog Controller unde
 
 When we have created our data and fed it into our application via SeedData, as well as creating the references via DbContext, we can create our CRUD functionality, this is described in the BlogController.cs file. See [resources](#resources) for more information.
 
-Once our CRUD operations are finalised, we can then use various CSS and JavaScript within our View files to customise the remaining application pages. 
+Once our CRUD operations are finalised, we can then use various CSS and JavaScript within our View files to customise the remaining application pages.
+
+### Bonus - Adding a second model to the database
+
+As touched upon in the [migrations](#migrations) section, we can update our models and add new data to a database with a new migration, this is also true with SQL Server and database queries when creating a new table. In our example, we have now added in the PortfolioController, as well as a model (Projects.cs) and an Index.cshtml View. We have also added a new `<a>` tag to our _Layout.cshtml file in order to help navigation during development. In our BlogPortfolioDbContext.cs file, we have also added in a new DbSet method to include our new model.
+
+In our project model, we see differing properties to the BlogPost model. In order to add this to the dbcontext and tables within our db file, we need to migrate the data with an update, once we have completed that then we can create new Seed Data following the migration and DB updates via EF. 
+
+
 
 ## Tech Stack
 

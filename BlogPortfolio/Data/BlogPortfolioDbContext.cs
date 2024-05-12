@@ -16,5 +16,8 @@ namespace BlogPortfolio.Data
         // Creates a DbSet property for the BlogPost entity corresponding
         // to a table in the database
         public DbSet<BlogPost> BlogPosts { get; set; }
+
+        // Create a dbset prop for Project models
+        public DbSet<Project> Projects { get; set; }
     }
 }

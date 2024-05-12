@@ -1,0 +1,50 @@
+@* Reference model type *@
+@model IEnumerable<Project>
+
+@{
+    ViewData["Title"] = "Portfolio";
+}
+
+<h1>My Portfolio:</h1>
+
+@* Flex container for cards *@
+<ul class="container">
+    @* Populate cards *@
+    @foreach(var item in Model)
+    {
+        @* Card *@
+        <ul class="card">
+            @* Image with alt tag *@
+            <img src="@item.FeaturedImageUrl" 
+                alt="projectImage" />
+            <li>
+                @* Title *@
+                <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                @* Populate tech stack list *@
+                <ul>
+                    @foreach(var tech in item.TechStack)
+                    {
+                        <li>@tech</li>
+                    }
+                </ul>
+                @* Description *@
+                <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                @* Github Link *@
+                <a href="@item.GitHubUrl" 
+                    target="_blank" 
+                    referrerpolicy="noreferrer noopener">
+                    Github
+                </a>
+                @* Deployed Link if exists *@
+                @if(item.DeployedUrl != null)
+                {
+                    <a href="@item.DeployedUrl" 
+                        target="_blank" 
+                        referrerpolicy="noreferrer noopener">
+                        Deployed Link
+                    </a>
+                }
+            </li>
+        </ul>
+    }
+</ul>
