@@ -15,24 +15,6 @@
     </p>
 }
 
-@* <form class="container
-            p-3
-            d-flex
-            flex-column">
-    <label>Title</label>
-    <input type="text" />
-    <label>Author</label>
-    <input type="text" />
-    <label>Description</label>
-    <input type="text" />
-    <label>Content</label>
-    <textarea type="text"></textarea>
-    <button type="submit"
-            class="btn 
-            btn-dark
-            my-3">Submit</button>
-</form> *@
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -63,7 +45,7 @@
         @* Content of blogpost, Inputs and validations *@
         <div class="form-group">
             @Html.LabelFor(model => model.Content, htmlAttributes: new { @class="control-label col-md-2"})
-            @Html.EditorFor(model => model.Content, "", new {@class="form-control"})
+            @Html.TextBoxFor(model => model.Content, "", new {@class="form-control"})
             @Html.ValidationMessageFor(model => model.Content, "", new {@class="text-danger"})
         </div>
 

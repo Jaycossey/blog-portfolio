@@ -2,7 +2,189 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@* TODO: Rework homepage to be more user friendly
+        Canvas element background for animation
+        Welcome / About floating container with:
+                Profile image,
+                Name, 
+                JobTitle
+
+                Description
+ *@
+
+<canvas id="bg-root"></canvas>
+
+<div id="welcome-container" class="border-black text-white p-3">
+    <h1 class="">Hello World!</h1>
+    <h3>My name is Ian, I am a Software Developer</h3>
 </div>
+
+
+
+<script type="text/javascript">
+    // Canvas element and context ref
+    const canvas = document.getElementById('bg-root');
+    const ctx = canvas.getContext('2d');
+    // storage for letter drops
+    const dropArray = [];
+    // max rendered drops
+    const MAX_DROPS = 150;
+
+    // iteration count
+    let tickCount = 0;
+    
+    // colors
+    const dark = "rgba(0, 0, 0, 0.8)";
+    const darkPurple = "rgb(200, 0, 200)";
+    const lightPurple = "rgb(255, 0, 255)";
+    const fadedPurple = "rgba(72, 152, 78, 0.1)";
+
+    // assign canvas size
+    const WIDTH = window.innerWidth;
+    const HEIGHT = window.innerHeight;
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+
+    // Grid pixel size
+    const pixelWidth = 20;
+    const pixelHeight = 20;
+    const trailHeight = 20;
+
+    // canvas styles
+    canvas.style.backgroundColor = dark;
+    canvas.style.position = "fixed";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    ctx.font = "20px monospace";
+    ctx.fillStyle = lightPurple;
+    ctx.shadowBlur = 5;
+
+    // assign random character
+    const getRandomChar = () => {
+        // range for ascii 33 - 126
+        const asciiValue = Math.floor(Math.random() * (96 - 33) + 33);
+        const asciiToChar = String.fromCharCode(asciiValue);
+
+        return asciiToChar;
+    }
+
+    // trail class
+    class Trail {
+        constructor(x, y) {
+            this.x = x,
+            this.y = y,
+            this.width = pixelWidth,
+            this.height = pixelHeight * trailHeight,
+            this.characters = [],
+            this.ctx = ctx
+        }
+        // assign random characters to trail
+        generateCharacters(trailLength) {
+            for (let i = 0; i < trailLength; i++) {
+                this.characters[i] = getRandomChar();
+            }
+        }
+        
+        // draw method, called in animation loop
+        draw() {
+            // draws trail at gradient colors
+            const gradient = ctx.createLinearGradient(this.x, this.y, this.x + WIDTH, this.y - HEIGHT);
+            // color stops in gradient
+            gradient.addColorStop(0, lightPurple);
+            gradient.addColorStop(0.2, darkPurple);
+            gradient.addColorStop(0.8, fadedPurple);
+
+            // draw on screen after tick
+            this.characters.forEach((character, i) => {
+                ctx.fillText(character, this.x, this.y - (pixelHeight * i));
+            });
+        }
+        
+        // update position and displayed characters
+        update() {
+            // if lower than canvas height move object to top of canvas
+            if (this.y >= HEIGHT) {
+                this.y = 0;
+            }
+            this.y += pixelHeight;
+
+            // update offset window count
+            if (this.y <= pixelHeight * trailHeight) {
+                // total height of trail / y gives single numeric offset in grid
+                let offset = Math.floor((pixelHeight * trailHeight) / this.y);
+                // clears top character
+                ctx.clearRect(this.x, HEIGHT - (pixelHeight * offset), pixelWidth, pixelHeight);
+            }
+            // clears current display and then fills new position, one tick below in grid
+            ctx.clearRect(this.x, this.y - (pixelHeight * trailHeight), pixelWidth, pixelHeight);
+            ctx.fillText(getRandomChar(), this.x, this.y - pixelHeight);
+        }
+    }
+
+    // "Drop" head, so the actual drop of the "rain"
+    class LetterDrop {
+        constructor(x, y) {
+            this.x = x, 
+            this.y = y,
+            this.width = pixelWidth,
+            this.height = pixelHeight,
+            this.trail = new Trail(this.x, this.y - pixelHeight)
+        }
+        // draw method at new location
+        draw(x, y) {
+            // assign a new character
+            let newChar = getRandomChar();
+            this.character = newChar;
+
+            // draw on canvas at x and y
+            ctx.fillText(this.character, x, y);
+        }
+
+        // update position
+        update() {
+            // clear current position on canvas, ready for trail to tick into
+            ctx.clearRect(this.x, this.y - pixelHeight, this.width, this.height);
+            // ensure position is within bounds of canvas
+            if (this.y >= HEIGHT) {
+                this.y = 0;
+            } else {
+                this.y += pixelHeight;
+            }
+
+            // call draw on new position each tick
+            this.draw(this.x, this.y);
+        }
+    }
+
+    // random x and y position
+    const randomPos = (xyValue) => {
+        if (xyValue == "x") {
+            return Math.floor(Math.random() * (WIDTH - 1) + 1);
+        }
+        return Math.floor(Math.random() * (HEIGHT - 1) + 1);
+    }
+
+    // populate array of "rain" and trails
+    for (let i = 0; i < MAX_DROPS; i++) {
+        dropArray.push(new LetterDrop(randomPos("x"), randomPos("y")));
+    }
+
+    dropArray.forEach((drop) => {
+        drop.trail.generateCharacters(10);
+        drop.trail.draw();
+    })
+
+    // animate function
+    const animate = () => {
+        dropArray.forEach((drop) => {
+            drop.update();
+            drop.trail.update();
+        });
+        
+        setTimeout(() => {
+            requestAnimationFrame(animate);
+        }, 100);
+    }
+    requestAnimationFrame(animate);
+
+</script>
