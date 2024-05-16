@@ -31,3 +31,19 @@ header {
 main {
   padding-top: 60px;
 }
+
+footer {
+  position: relative;
+  bottom: 0;
+  height: 50px;
+  background-color: white;
+}
+
+#welcome-container {
+  min-height: 820px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  position: relative;
+  margin-top: 40px;
+  margin: auto;
+}
